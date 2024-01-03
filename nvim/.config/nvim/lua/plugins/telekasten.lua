@@ -8,6 +8,7 @@ return {
         home = homepath,
         dailies = homepath .. "/" .. "calendar",
         subdirs_in_links = false,
+        auto_set_filetype = false,
       })
     end,
     keys = {
