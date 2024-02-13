@@ -1,5 +1,12 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  dependencies = {
+    { "luckasRanarison/tree-sitter-hypr" },
+    "nvim-treesitter/playground",
+  },
+  keys = {
+    { "<leader>xP", "<cmd>TSPlaygroundToggle<CR>" },
+  },
   opts = {
     ensure_installed = {
       "gitignore",
