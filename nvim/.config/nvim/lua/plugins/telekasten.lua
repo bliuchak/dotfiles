@@ -6,7 +6,8 @@ return {
       local homepath = vim.fn.expand("~/zettelkasten")
       require("telekasten").setup({
         home = homepath,
-        dailies = homepath .. "/" .. "calendar",
+        dailies = homepath .. "/calendar",
+        weeklies = homepath .. "/calendar",
         subdirs_in_links = false,
         auto_set_filetype = false,
       })
