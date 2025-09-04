@@ -17,6 +17,7 @@ return {
         "json-lsp",
         "yaml-language-server",
         "docker-compose-language-service",
+        "typescript-language-server",
       })
     end,
   },
@@ -26,7 +27,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       inlay_hints = { enabled = true },
-      ---@type lspconfig.options
       servers = {
         yamlls = {
           settings = {
