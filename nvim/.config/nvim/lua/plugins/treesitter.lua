@@ -14,6 +14,8 @@ return {
       "rust",
       "sql",
       "markdown",
+      "typescript",
+      "tsx",
     },
   },
   config = function(_, opts)

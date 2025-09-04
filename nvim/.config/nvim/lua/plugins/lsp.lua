@@ -10,15 +10,11 @@ return {
         "luacheck", -- another lua linter
         "shellcheck", -- bash linter
         "shfmt", -- shell parser/formatter
-        "typescript-language-server",
         "lua-language-server",
-        "gopls", -- go lsp
         "marksman", -- markdown lsp
-        "terraform-ls",
         "dockerfile-language-server",
         "bash-language-server",
         "json-lsp",
-        "tflint", -- terraform linter
         "yaml-language-server",
         "docker-compose-language-service",
       })

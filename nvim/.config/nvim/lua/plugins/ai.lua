@@ -1,35 +1,9 @@
 return {
-  {
-    "David-Kunz/gen.nvim",
-    keys = {
-      { "<leader>]", ":Gen<cr>", desc = "Gen" },
-      -- { "<leader>]c", ":Gen Chat<cr>", desc = "Gen Chat", mode = { "i", "v" } },
-      -- { "<leader>]s", ":Gen Summarize<cr>", desc = "Gen Summarize", mode = { "i", "v" } },
-    },
-    opts = {
-      model = "mistral", -- The default model to use.
-      display_mode = "split", -- The display mode. Can be "float" or "split".
-      show_prompt = false, -- Shows the Prompt submitted to Ollama.
-      show_model = false, -- Displays which model you are using at the beginning of your chat session.
-      no_auto_close = false, -- Never closes the window automatically.
-      init = function()
-        pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
-      end,
-      -- Function to initialize Ollama
-      command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
-      -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
-      -- This can also be a lua function returning a command string, with options as the input parameter.
-      -- The executed command must return a JSON object with { response, context }
-      -- (context property is optional).
-      list_models = "<omitted lua function>", -- Retrieves a list of model names
-      debug = false, -- Prints errors and the command which is run.
-    },
-  },
   -- copilot stuff
   -- stolen from https://github.com/fredrikaverpil/dotfiles/blob/main/nvim-lazyvim/lua/plugins/ai.lua
   {
     "zbirenbaum/copilot.lua",
-    enabled = true,
+    enabled = false,
     dependencies = {
       "hrsh7th/nvim-cmp",
     },
@@ -75,10 +49,10 @@ return {
     opts = function(_, opts)
       local Util = require("lazyvim.util")
       local colors = {
-        [""] = Util.ui.fg("Special"),
-        ["Normal"] = Util.ui.fg("Special"),
-        ["Warning"] = Util.ui.fg("DiagnosticError"),
-        ["InProgress"] = Util.ui.fg("DiagnosticWarn"),
+        [""] = Snacks.util.color("Special"),
+        ["Normal"] = Snacks.util.color("Special"),
+        ["Warning"] = Snacks.util.color("DiagnosticError"),
+        ["InProgress"] = Snacks.util.color("DiagnosticWarn"),
       }
       table.insert(opts.sections.lualine_x, 2, {
         function()
