@@ -9,7 +9,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client.name == "ts_ls" then
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
-      print("ts_ls formatting disabled via autocmd")
     end
   end,
 })
