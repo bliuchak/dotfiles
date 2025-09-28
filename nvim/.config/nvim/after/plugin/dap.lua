@@ -65,87 +65,48 @@ dap.adapters.go = function(callback, _)
   end, 100)
 end
 
--- FIXME: it's not working for some reasons
--- dap.configurations.go = {
---   {
---     type = "go",
---     name = "Debug (from vscode-go)",
---     request = "launch",
---     showLog = false,
---     program = "${file}",
---     dlvToolPath = vim.fn.exepath("dlv"), -- Adjust to where delve is installed
---   },
---   {
---     type = "go",
---     name = "Debug (No File)",
---     request = "launch",
---     program = "",
---   },
---   {
---     type = "go",
---     name = "Debug",
---     request = "launch",
---     program = "${file}",
---     showLog = true,
---     -- console = "externalTerminal",
---     -- dlvToolPath = vim.fn.exepath "dlv",
---   },
---   {
---     name = "Test Current File",
---     type = "go",
---     request = "launch",
---     showLog = true,
---     mode = "test",
---     program = ".",
---     dlvToolPath = vim.fn.exepath("dlv"),
---   },
---   {
---     type = "go",
---     name = "Run lsif-clang indexer",
---     request = "launch",
---     showLog = true,
---     program = ".",
---     args = {
---       "--indexer",
---       "lsif-clang compile_commands.json",
---       "--dir",
---       vim.fn.expand("~/sourcegraph/lsif-clang/functionaltest"),
---       "--debug",
---     },
---     dlvToolPath = vim.fn.exepath("dlv"),
---   },
---   {
---     type = "go",
---     name = "Run lsif-go-imports in smol_go",
---     request = "launch",
---     showLog = true,
---     program = "./cmd/lsif-go",
---     args = {
---       "--project-root=/home/tjdevries/sourcegraph/smol_go/",
---       "--repository-root=/home/tjdevries/sourcegraph/smol_go/",
---       "--module-root=/home/tjdevries/sourcegraph/smol_go/",
---       "--repository-remote=github.com/tjdevries/smol_go",
---       "--no-animation",
---     },
---     dlvToolPath = vim.fn.exepath("dlv"),
---   },
---   {
---     type = "go",
---     name = "Run lsif-go-imports in sourcegraph",
---     request = "launch",
---     showLog = true,
---     program = "./cmd/lsif-go",
---     args = {
---       "--project-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
---       "--repository-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
---       "--module-root=/home/tjdevries/sourcegraph/sourcegraph.git/main",
---       "--no-animation",
---     },
---     dlvToolPath = vim.fn.exepath("dlv"),
---   },
--- }
+dap.adapters["pwa-node"] = {
+  type = "server",
+  host = "localhost",
+  port = "${port}",
+  executable = {
+    command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+    args = { "${port}" },
+  },
+}
 
---
+local utils = require("dap.utils")
+
+dap.configurations.typescript = {
+  {
+    type = "pwa-node",
+    request = "attach",
+    name = "Attach to Node process",
+    processId = utils.pick_process, -- This will show a picker of running processes
+    restart = true,
+    sourceMaps = true,
+    localRoot = "${workspaceFolder}",
+    remoteRoot = "${workspaceFolder}",
+    skipFiles = { "<node_internals>/**" },
+  },
+  -- Keep a manual port option as backup
+  {
+    type = "pwa-node",
+    request = "attach",
+    name = "Attach to custom port",
+    port = function()
+      return vim.fn.input("Debug port: ", "9229") -- Default Node.js debug port
+    end,
+    restart = true,
+    sourceMaps = true,
+    localRoot = "${workspaceFolder}",
+    remoteRoot = "${workspaceFolder}",
+    skipFiles = { "<node_internals>/**" },
+  },
+}
+
+dap.configurations.javascript = dap.configurations.typescript
+
 local map = function(lhs, rhs, desc)
   if desc then
     desc = "[DAP] " .. desc

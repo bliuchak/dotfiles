@@ -5,7 +5,8 @@ return {
   "nvim-telescope/telescope-dap.nvim",
   "nvim-neotest/nvim-nio",
 
-  --  Adaparter configuration for specific languages
+  --  Adapter configuration for specific languages
   { "leoluz/nvim-dap-go" },
   { "mfussenegger/nvim-dap-python" },
+  { "mxsdev/nvim-dap-vscode-js" },
 }
