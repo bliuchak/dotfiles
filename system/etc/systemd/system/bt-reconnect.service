@@ -1,0 +1,11 @@
+[Unit]
+Description=Bluetooth headphones reconnect after sleep
+After=sleep.target bluetooth.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/bash -c 'for i in 1 2 3 4 5; do /usr/bin/bluetoothctl connect 4C:87:5D:80:CD:4B && exit 0; sleep 2; done'
+
+[Install]
+WantedBy=sleep.target

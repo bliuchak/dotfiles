@@ -1,0 +1,13 @@
+[Unit]
+Description=Auto-switch audio to Bluetooth when connected
+After=wireplumber.service bluetooth.target
+Wants=wireplumber.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/bt-auto-switch.sh monitor
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
