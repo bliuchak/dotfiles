@@ -14,10 +14,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls="exa --icons -F -H --group-directories-first --git -1"
   eval "$(starship init zsh)"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  wal -i ~/Downloads/4.jpg > /dev/null
-
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh
 
   export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 fi
+export PATH="$HOME/.npm-global/bin:$PATH"
