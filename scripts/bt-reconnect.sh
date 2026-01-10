@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # Populate here MAC address of the headphones
-HEADPHONES_MAC=""
+HEADPHONES_MAC="4C:87:5D:80:CD:4B"
 LOG_TAG="bt-reconnect"
 
 log() {

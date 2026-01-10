@@ -5,18 +5,16 @@ dotfiles
 ```bash
 stow -t ~/ tmux
 stow -t ~/.local/bin scripts
-stow -t ~/.config systemd
+stow -t ~/ bt-auto-switch
+sudo stow -t / bt-reconnect # system-level service due to sleep.target
 ```
 
-## bt-auto-switch
+## Extra Steps
 
-Auto-switches default audio sink/source to Bluetooth when a device connects. Uses dbus-monitor to watch BlueZ connection events and wpctl (WirePlumber) to set defaults.
-
-**Usage:**
-- `bt-auto-switch.sh monitor` - Continuously monitor for BT connections (default)
-- `bt-auto-switch.sh switch` - One-shot switch to Bluetooth if available
-
-**Systemd service:**
 ```bash
+systemctl --user daemon-reload
 systemctl --user enable --now bt-auto-switch.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable bt-reconnect.service
 ```
