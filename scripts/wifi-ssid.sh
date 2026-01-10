@@ -8,9 +8,26 @@ until ironbar var set wifi_ssid "" 2>/dev/null; do
   sleep 0.5
 done
 
+# Get the wireless interface name
+get_wifi_interface() {
+  local iface
+  for iface in /sys/class/net/wl*; do
+    if [[ -d "$iface" ]]; then
+      basename "$iface"
+      return
+    fi
+  done
+}
+
 update_ssid() {
   local ssid
-  ssid=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes:' | cut -d':' -f2-)
+  local iface
+
+  iface=$(get_wifi_interface)
+
+  if [[ -n "$iface" ]]; then
+    ssid=$(iwctl station "$iface" show 2>/dev/null | sed -n 's/.*Connected network[[:space:]]*//p' | xargs)
+  fi
 
   if [[ -z "$ssid" ]]; then
     ssid="disconnected"
@@ -22,7 +39,7 @@ update_ssid() {
 # Set initial value
 update_ssid
 
-# Monitor NetworkManager events and update on changes
-nmcli monitor | while read -r _; do
+# Monitor wireless events and update on changes
+iw event | while read -r _; do
   update_ssid
 done
