@@ -49,7 +49,11 @@ switch_to_bluetooth() {
 
     if [ -n "$sink_id" ]; then
         log "Setting Bluetooth sink (id=$sink_id) as default"
-        wpctl set-default "$sink_id" && log "Sink switch successful" || log "Sink switch failed"
+        if wpctl set-default "$sink_id"; then
+            log "Sink switch successful"
+        else
+            log "Sink switch failed"
+        fi
     else
         log "No Bluetooth sink found"
     fi
@@ -59,7 +63,11 @@ switch_to_bluetooth() {
 
     if [ -n "$source_id" ]; then
         log "Setting Bluetooth source (id=$source_id) as default"
-        wpctl set-default "$source_id" && log "Source switch successful" || log "Source switch failed"
+        if wpctl set-default "$source_id"; then
+            log "Source switch successful"
+        else
+            log "Source switch failed"
+        fi
     fi
 }
 
